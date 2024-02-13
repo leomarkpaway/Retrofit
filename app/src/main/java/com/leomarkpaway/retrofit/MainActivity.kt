@@ -3,8 +3,11 @@ package com.leomarkpaway.retrofit
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.leomarkpaway.retrofit.adapter.PostAdapter
 import com.leomarkpaway.retrofit.common.base.BaseActivity
 import com.leomarkpaway.retrofit.databinding.ActivityMainBinding
+import com.leomarkpaway.retrofit.model.AllPost
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override val viewModel: MainViewModel by viewModels()
@@ -12,10 +15,22 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun setupViews() {
         setSupportActionBar(binding.toolbar)
+        viewModel.getAllPost()
     }
 
     override fun subscribe() {
-        //TODO "Not yet implemented"
+        observeAllPost()
+    }
+
+    private fun setupPostList(posts: AllPost) = with(binding.rvPost) {
+        adapter = PostAdapter(posts) {/*TODO on click post item*/}
+        layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+    }
+
+    private fun observeAllPost() {
+        viewModel.allPost.observe(this) { posts ->
+            setupPostList(posts)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

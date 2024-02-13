@@ -24,6 +24,7 @@ class MainViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     val response = response.body()
                     _allPost.value = response
+                    Log.d("qwe", "res $response")
                 } else {
                     // Handle error
                     Log.d("qwe", "error")
