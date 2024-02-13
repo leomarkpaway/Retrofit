@@ -1,4 +1,4 @@
-package com.leomarkpaway.android_basics.common.base
+package com.leomarkpaway.retrofit.common.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
