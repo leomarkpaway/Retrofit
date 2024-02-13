@@ -12,6 +12,7 @@ import com.leomarkpaway.retrofit.model.AllPost
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override val viewModel: MainViewModel by viewModels()
     override fun inflateBinding() = ActivityMainBinding.inflate(layoutInflater)
+    lateinit var postAdapter: PostAdapter
 
     override fun setupViews() {
         setSupportActionBar(binding.toolbar)
@@ -23,7 +24,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     private fun setupPostList(posts: AllPost) = with(binding.rvPost) {
-        adapter = PostAdapter(posts) {/*TODO on click post item*/}
+        postAdapter = PostAdapter(posts) {/*TODO on click post item*/}
+        adapter = postAdapter
         layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
     }
 
@@ -45,7 +47,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                //TODO "Filter item here"
+                postAdapter.filter.filter(newText)
                 return true
             }
         })
